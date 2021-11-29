@@ -3,5 +3,15 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
-
+    {% if posts|length == 0 %}
+        <p>There is no pin yet</p>
+    {% else %}
+        {% for post in posts %}
+            <article>
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.description }}</p>
+            </article>
+        {% endfor %}
+        
+    {% endif %}
 {% endblock %}
