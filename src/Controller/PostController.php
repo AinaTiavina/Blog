@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/", name="app_home")
+     * @Route("/", name="app_home", methods={"GET"})
      */
     public function index(PostRepository $postRep): Response
     {
@@ -24,7 +24,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="app_create", methods={"GET","POST"})
+     * @Route("/create", name="app_post_create", methods={"GET","POST"})
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -43,5 +43,46 @@ class PostController extends AbstractController
         return $this->render('post/create.html.twig', [
             'form' => $form->createView()
         ]);
-    }    
+    }
+
+    /**
+     * @Route("/post/{id<[0-9]+>}", name="app_post_show", methods="GET")
+     */
+    public function show(Post $post): Response
+    {
+        return $this->render('post/show.html.twig', compact('post'));
+    }
+
+    /**
+     * @Route("/post/{id<[0-9]+>}/edit", name="app_post_edit", methods={"GET","PUT"})
+     */
+    public function edit(Post $post, EntityManagerInterface $em, Request $request): Response
+    {
+        $form = $this->createForm(PostType::class, $post, ['method' => 'PUT']);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->flush();
+
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('post/edit.html.twig', [
+            'post' => $post,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/post/{id<[0-9]+>}", name="app_post_delete", methods={"DELETE"})
+     */
+    public function delete(Post $post, Request $request, EntityManagerInterface $em): Response
+    {
+        if($this->isCsrfTokenValid('post_deletion'.$post->getId(), $request->request->get('csrf_token'))){
+            $em->remove($post);
+            $em->flush();    
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
 }

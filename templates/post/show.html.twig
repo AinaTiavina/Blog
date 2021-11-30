@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title post.title %}
+
+{% block body %}
+    <div>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.description }}</p>
+        <button><a href="{{ path('app_post_edit', {id:post.id}) }}">edit</a></button>
+        <button>
+            <a href="#" onclick="event.preventDefault();confirm('are you sure?') && 
+            document.getElementById('js-pin-delete-form').submit();">Delete</a>
+        </button>
+    </div>
+
+    <form id="js-pin-delete-form" action="{{ path('app_post_delete', { id:post.id }) }}" method="post" style="display: none;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token('post_deletion'~post.id) }}">
+        <input type="hidden" name="_method" value="DELETE">
+    </form>
+    
+{% endblock %}

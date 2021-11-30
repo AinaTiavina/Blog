@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All Posts{% endblock %}
+{% block title "All Posts" %}
+
 
 {% block body %}
     {% if posts|length == 0 %}
@@ -8,7 +9,7 @@
     {% else %}
         {% for post in posts %}
             <article>
-                <h1>{{ post.title }}</h1>
+                <h1><a href="{{ path('app_post_show', {id:post.id})}}">{{ post.title }}</a></h1>
                 <p>{{ post.description }}</p>
             </article>
         {% endfor %}
