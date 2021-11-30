@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Share a new subject{% endblock %}
+
+{% block body %}
+    {{ include('post/_form.html.twig', { submitBtnText: "Share Post" }) }}
+{% endblock %}
