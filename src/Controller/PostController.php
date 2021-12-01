@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,11 +31,10 @@ class PostController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $post = new Post;
-        $form = $this->createForm(PostType::class, $post);
-        
-        $form->handleRequest($request);
+        $postForm = $this->createForm(PostType::class, $post);
+        $postForm->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if($postForm->isSubmitted() && $postForm->isValid()){
             $em->persist($post);
             $em->flush();
 
@@ -41,16 +42,30 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $postForm->createView(),
         ]);
     }
 
     /**
-     * @Route("/post/{id<[0-9]+>}", name="app_post_show", methods="GET")
+     * @Route("/post/{id<[0-9]+>}", name="app_post_show", methods={"GET","POST"})
      */
-    public function show(Post $post): Response
+    public function show(Post $post, EntityManagerInterface $em, Request $request): Response
     {
-        return $this->render('post/show.html.twig', compact('post'));
+        $coms = new Comment;
+        $comsForm = $this->createForm(CommentType::class, $coms);
+        $comsForm->handleRequest($request);
+
+        if($comsForm->isSubmitted() && $comsForm->isValid()){
+            $coms->setPost($post);
+            $em->persist($coms);
+            $em->flush();
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+            'form' => $comsForm->createView()
+        ]);
     }
 
     /**

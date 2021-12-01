@@ -6,6 +6,9 @@
     <div>
         <h1>{{ post.title }}</h1>
         <p>{{ post.description }}</p>
+
+        {{ include('post/_form.html.twig', { submitBtnText: "Submit Comment" }) }}
+
         <button><a href="{{ path('app_post_edit', {id:post.id}) }}">edit</a></button>
         <button>
             <a href="#" onclick="event.preventDefault();confirm('are you sure?') && 
