@@ -6,6 +6,7 @@ use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PostType extends AbstractType
 {
@@ -14,6 +15,12 @@ class PostType extends AbstractType
         $builder
             ->add('Title')
             ->add('Description')
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Upload Image(PNG or JPG)',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+            ]);
         ;
     }
 
