@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,7 +50,7 @@ class PostController extends AbstractController
     /**
      * @Route("/post/{id<[0-9]+>}", name="app_post_show", methods={"GET","POST"})
      */
-    public function show(Post $post, EntityManagerInterface $em, Request $request): Response
+    public function show(Post $post, EntityManagerInterface $em, Request $request, CommentRepository $rep): Response
     {
         $coms = new Comment;
         $comsForm = $this->createForm(CommentType::class, $coms);
@@ -59,12 +60,13 @@ class PostController extends AbstractController
             $coms->setPost($post);
             $em->persist($coms);
             $em->flush();
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_post_show',['id' => $post->getId()]);
         }
 
         return $this->render('post/show.html.twig', [
             'post' => $post,
-            'form' => $comsForm->createView()
+            'form' => $comsForm->createView(),
+            'comments' => $rep->findBy(['post' => $post->getId()])
         ]);
     }
 

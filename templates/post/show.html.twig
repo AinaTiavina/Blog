@@ -7,6 +7,10 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.description }}</p>
 
+        {% for comment in comments %}
+            <p>{{ comment.description }}</p>            
+        {% endfor %}
+
         {{ include('post/_form.html.twig', { submitBtnText: "Submit Comment" }) }}
 
         <button><a href="{{ path('app_post_edit', {id:post.id}) }}">edit</a></button>
