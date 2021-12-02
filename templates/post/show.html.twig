@@ -3,10 +3,15 @@
 {% block title post.title %}
 
 {% block body %}
+    {% include "partials/_navbar.html.twig" %}
+    
     <div>
         <h1>{{ post.title }}</h1>
         <p>{{ post.description }}</p>
-
+        <img src="{{ (post.imageName ? vich_uploader_asset(post) : 
+        asset("Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg")) | imagine_filter('squared_thumbnail_small') }}" 
+        alt="{{ post.title }}"/>
+        
         {% for comment in comments %}
             <p>{{ comment.description }}</p>            
         {% endfor %}

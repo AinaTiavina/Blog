@@ -3,5 +3,7 @@
 {% block title %}Share a new subject{% endblock %}
 
 {% block body %}
+    {% include "partials/_navbar.html.twig" %}
+    
     {{ include('post/_form.html.twig', { submitBtnText: "Share Post" }) }}
 {% endblock %}

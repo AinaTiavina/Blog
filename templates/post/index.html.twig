@@ -2,19 +2,49 @@
 
 {% block title "All Posts" %}
 
-
 {% block body %}
-    {% if posts|length == 0 %}
-        <p>There is no pin yet</p>
-    {% else %}
-        {% for post in posts %}
-            <article>
-                <h1><a href="{{ path('app_post_show', {id:post.id})}}">{{ post.title }}</a></h1>
-                <p>{{ post.description }}</p>
-<img src="{{ (post.imageName ? vich_uploader_asset(post) : asset("Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg")) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ post.title }}"/>
+    {% include "partials/_navbar.html.twig" %}
+    
+    <div class="container-fluid">
+        {% if posts|length == 0 %}
+            <p>There is no pin yet</p>
+        {% else %}
+            <div class="row">
+                {% for post in posts %}
+                <article class="col-4 mt-3 mb-5">
+                    <div class="card" style="width:400px">
+                        <a href="{{ path('app_post_show', {id:post.id}) }}"><img class="card-img-top" src="{{ (post.imageName ? vich_uploader_asset(post) : asset('Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg'))
+                        | imagine_filter('squared_thumbnail_medium') }}" alt="{{ post.title }}"
+                                style="width:100%"></a>
+                        <div class="card-body">
+                            <h4 class="card-title"><a href="{{ path('app_post_show', {id:post.id})}}">{{ post.title }}</a></h4>
+                            <p>{{ post.description }}</p>
+                            <a href="#" class="btn btn-primary">See Post</a>
+                        </div>
+                    </div>
+                </article>
+                
+                {% endfor %}
+                
+                {% endif %}
+            </div>
+    </div>
 
-            </article>
-        {% endfor %}
-        
-    {% endif %}
+    <style>
+        body{
+            background-image: url("Images/45f5d09bbf47aa81da0156929a6bb141.jpg");
+            background-size: cover;
+        }
+
+        div[class="card"]{
+            border: none;
+            box-shadow: 12px 4px 12px 7px;
+        }
+
+        div[class="card-body"]{
+            background-image: url("Images/11626401376brz3iwieihxkdbednawaplmklsfoobaa8tnrhnezgezszbi4vgejg6tymovi8mc6naxqg5vh46jtwn8lcgvsnbskv83pcyos5nks.jpg");
+            background-size: cover;
+        }
+    </style>
+
 {% endblock %}

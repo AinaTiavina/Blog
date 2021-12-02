@@ -3,6 +3,8 @@
 {% block title 'Update the post '~post.id %}
 
 {% block body %}
+    {% include "partials/_navbar.html.twig" %}
+    
     <h1>Update post number {{ post.id }}</h1>
     
 	{{ include('post/_form.html.twig', { submitBtnText: "Update Post" }) }}
