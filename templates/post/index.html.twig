@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h4 class="card-title"><a href="{{ path('app_post_show', {id:post.id})}}">{{ post.title }}</a></h4>
                             <p>{{ post.description }}</p>
-                            <a href="#" class="btn btn-primary">See Post</a>
+                            <a href="{{ path('app_post_show', {id:post.id}) }}" class="btn btn-primary">See Post</a>
                         </div>
                     </div>
                 </article>
