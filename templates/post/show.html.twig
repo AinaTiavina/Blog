@@ -5,29 +5,69 @@
 {% block body %}
     {% include "partials/_navbar.html.twig" %}
     
-    <div class="row">
-        <article class="col-4 mt-3 mb-5">
-            <div class="card" style="width:400px">
-                <img class="card-img-top" src="{{ (post.imageName ? vich_uploader_asset(post) : asset('Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg'))
-                | imagine_filter('squared_thumbnail_small') }}" alt="{{ post.title }}"style="width:100%">
-                <div class="card-body">
-                    <h4 class="card-title"><a href="{{ path('app_home', {id:post.id})}}">{{ post.title }}</a></h4>
-                    <p>{{ post.description }}</p>
-                    <button class="btn btn-outline-primary"><a class="text-decoration-none text-dark" href="{{ path('app_post_edit', {id:post.id}) }}">edit</a></button>
-                    <button class="btn btn-outline-primary">
-                        <a href="#" onclick="event.preventDefault();confirm('are you sure?') && 
-                        document.getElementById('js-pin-delete-form').submit();" class="text-decoration-none">Delete</a>
-                    </button>
-                    <div>
-                        {% for comment in comments %}
-                            <p>{{ comment.description }}</p>
-                        {% endfor %}
+<div
+	class="container">
+
+	<!-- post Item Heading -->
+	<h1 class="my-4">
+        <a href="{{ path('app_home')}}" class="text-decoration-none text-dark">{{ post.title }}</a>
+	</h1>
+
+	<!-- Post Item Row -->
+	<div class="row">
+
+		<div class="col-md-8">
+			<img class="img-fluid rounded" src="{{ (post.imageName ? vich_uploader_asset(post) : asset('Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg'))
+            | imagine_filter('squared_thumbnail_small') }}" alt="{{ post.title }}"style="width:100%">
+		</div>
+
+		<div class="col-md-4">
+            <p>{{ post.description }}</p>			
+		</div>
+
+        <div class="btn-group mt-5 mb-3 w-50">
+            <button class="btn btn-outline-primary"><a class="text-decoration-none text-dark"
+            href="{{ path('app_post_edit', {id:post.id}) }}">edit</a></button>
+            <button class="btn btn-outline-danger">
+                <a href="#" onclick="event.preventDefault();confirm('are you sure?') && 
+                document.getElementById('js-pin-delete-form').submit();" class="text-decoration-none text-dark">Delete</a>
+            </button>
+        </div>
+    </div>
+
+<!---------------------------comments-------------------------------->
+    <div class="container">
+        <div class="row bootstrap snippets bootdeys">
+            <div class="col-md-8 col-sm-12">
+                <div class="comment-wrapper">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            {{ include('post/_form.html.twig', { submitBtnText: "Post" }) }}
+                            <div class="clearfix"></div>
+                            <hr>
+                            <ul class="media-list">
+                                {% for comment in comments %}
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <strong class="text-success">@MartinoMont</strong>
+                                            <span class="text-muted float-right">
+                                                <small class="text-muted">{{ comment.createdAt|date('H:i') }}</small>
+                                            </span>
+                                            <p>
+                                                {{ comment.description }}
+                                            </p>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
+    
             </div>
-            {{ include('post/_form.html.twig', { submitBtnText: "Submit Comment" }) }}
-        </article>
+        </div>
     </div>
+            
 
     <form id="js-pin-delete-form" action="{{ path('app_post_delete', { id:post.id }) }}" method="post" style="display: none;">
         <input type="hidden" name="csrf_token" value="{{ csrf_token('post_deletion'~post.id) }}">
