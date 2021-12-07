@@ -82,7 +82,8 @@ class PostController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $em->flush();
-
+            $this->addFlash('success','Post successfully edited');
+            
             return $this->redirectToRoute('app_home');
         }
         return $this->render('post/edit.html.twig', [
@@ -97,6 +98,7 @@ class PostController extends AbstractController
     public function delete(Post $post, Request $request, EntityManagerInterface $em): Response
     {
         if($this->isCsrfTokenValid('post_deletion'.$post->getId(), $request->request->get('csrf_token'))){
+            $this->addFlash('success','Post successfully deleted');
             $em->remove($post);
             $em->flush();    
         }
