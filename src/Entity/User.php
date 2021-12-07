@@ -16,17 +16,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestampble;
-    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,6 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sexe;
 
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
     private $email;
 
     /**
