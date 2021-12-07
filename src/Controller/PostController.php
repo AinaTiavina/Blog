@@ -39,6 +39,7 @@ class PostController extends AbstractController
         if($postForm->isSubmitted() && $postForm->isValid()){
             $em->persist($post);
             $em->flush();
+            $this->addFlash('success', 'Your post is successfully created');
 
             return $this->redirectToRoute("app_home");
         }
