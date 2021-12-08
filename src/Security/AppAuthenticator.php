@@ -5,7 +5,6 @@ namespace App\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -56,7 +55,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $this->flash->add('success','You are logged in successfully');
+        $this->flash->add('success','Welcome '.$token->getUser()->getFirstName());
 
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
         
