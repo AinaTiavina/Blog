@@ -7,17 +7,83 @@
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    
+    <section class="vh-100">
+        <div class="container py-3 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration</h3>
+                            {{ form_start(form) }}
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            {{ form_row(form.lastName) }}
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            {{ form_row(form.firstName) }}
+                                        </div>
+    
+                                    </div>
+                                </div>
+    
+                                <div class="row">
+                                    <div class="col-md-12 mb-4 d-flex align-items-center">
+                                        <div class="form-outline datepicker w-100">
+                                            {{ form_row(form.birthDate) }}
+                                        </div>
+    
+                                    </div>
+                                </div>
 
-    {{ form_start(form) }}
-        {{ form_row(form.lastName) }}
-        {{ form_row(form.firstName) }}
-        {{ form_row(form.sexe) }}
-        {{ form_row(form.birthDate) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.password) }}
-        {{ form_row(form.agreeTerms) }}
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{ form_row(form.sexe) }}
+                                    </div>
+                                </div>
+    
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+    
+                                        <div class="form-outline">
+                                            {{ form_row(form.email) }}
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+    
+                                        <div class="form-outline">
+                                            {{ form_row(form.password) }}
+                                        </div>
+    
+                                    </div>
+                                </div>
 
-        <button type="submit" class="btn btn-info btn-block">Register</button>
-    {{ form_end(form) }}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ form_row(form.agreeTerms) }}
+                                    </div>
+                                </div>
+    
+                                <div class="mt-4 pt-2">
+                                    <button type="submit" class="btn btn-primary btn-lg"> Register</button>
+                                </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        body{
+            background-image: url('Images/1-C-2QH9ILLFXtvSHYXukag.jpeg');
+            background-attachment: fixed;
+        }
+    </style>
 {% endblock %}

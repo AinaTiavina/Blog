@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -19,23 +20,45 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('lastName')
-            ->add('firstName')
+            ->add('lastName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control form-control-lg'
+                ]
+            ])
+            ->add('firstName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control form-control-lg'
+                ]
+            ])
             ->add('sexe', ChoiceType::class,[
                 'choices' => [
                     'Masculin' => 'Masculin',
                     'Feminin' => 'Feminin'
+                ],
+                'attr' => [
+                    'class' => 'select form-control-lg'
                 ]
             ])
             ->add('birthDate', DateType::class, [
                 'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control form-control-lg',
+                    'id' => 'birthdayDate'
+                ]
             ])
-            ->add('email')
+            ->add('email', null, [
+                'attr' => [
+                    'class' => 'form-control form-control-lg'
+                ]
+            ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'form-control form-control-lg'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
