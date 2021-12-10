@@ -37,6 +37,7 @@ class PostController extends AbstractController
         $postForm->handleRequest($request);
 
         if($postForm->isSubmitted() && $postForm->isValid()){
+            $post->setUser($this->getUser());
             $em->persist($post);
             $em->flush();
             $this->addFlash('success', 'Your post is successfully created');

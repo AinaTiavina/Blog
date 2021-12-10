@@ -15,7 +15,8 @@
                         | imagine_filter('squared_thumbnail_medium') }}" alt="{{ post.title }}"
                                 style="width:100%"></a>
                         <div class="card-body">
-                            <h4 class="card-title"><a href="{{ path('app_post_show', {id:post.id})}}">{{ post.title }}</a></h4>
+                            <h4 class="card-title"><a href="{{ path('app_post_show', {id:post.id})}}">{{ post.title }}</a>
+                            <span class="text-secondary h6">by {{ post.user.lastName }}</span></h4>
                             <p>{{ post.description }}</p>
                             <a href="{{ path('app_post_show', {id:post.id}) }}" class="btn btn-primary">See Post</a>
                         </div>
