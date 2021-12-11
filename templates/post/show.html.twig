@@ -49,7 +49,7 @@
                                 {% for comment in comments %}
                                     <li class="media">
                                         <div class="media-body">
-                                            <strong class="text-success">@MartinoMont</strong>
+                                            <strong class="text-success">{{ comment.user.lastName }}</strong>
                                             <span class="text-muted float-right">
                                                 <small class="text-muted">{{ comment.createdAt|date('H:i') }}</small>
                                             </span>

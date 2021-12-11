@@ -61,8 +61,10 @@ class PostController extends AbstractController
 
         if($comsForm->isSubmitted() && $comsForm->isValid()){
             $coms->setPost($post);
+            $coms->setUser($this->getUser());
             $em->persist($coms);
             $em->flush();
+            
             return $this->redirectToRoute('app_post_show',['id' => $post->getId()]);
         }
 
