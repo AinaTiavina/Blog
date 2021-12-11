@@ -23,6 +23,7 @@ security:
             custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
+                csrf_token_generator: Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
                 # where to redirect after logout
                 target: app_login
             login_throttling:
