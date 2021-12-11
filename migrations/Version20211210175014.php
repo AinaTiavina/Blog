@@ -14,7 +14,7 @@ final class Version20211210175014 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Relates each post row to one user';
     }
 
     public function up(Schema $schema): void
