@@ -55,7 +55,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $this->flash->add('success','Welcome '.$token->getUser()->getFirstName());
+        $this->flash->add('success','Welcome '.$token->getUser()->getFirstName().' '.$token->getUser()->getLastName());
 
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
         
