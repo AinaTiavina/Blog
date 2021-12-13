@@ -78,7 +78,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'You should agree to our terms privacy.',
                     ]),
                 ],
-                'label' => 'I agree with the policy and terms privacy.'
+                'label' => 'I agree with the terms policy and privacy.'
             ])
         ;
     }
