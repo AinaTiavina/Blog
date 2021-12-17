@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title app.user.lastName %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.email) }}
+        <button type="submit" class="btn btn-danger">Edit my account</button>
+    {{ form_end(form) }}
+{% endblock %}

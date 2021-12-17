@@ -53,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank(message="The email cannot be null")
+     * @Assert\NotBlank(message="The email field cannot be null")
      * @Assert\Email(message="Your email is invalid, please retry")
      */
     private $email;

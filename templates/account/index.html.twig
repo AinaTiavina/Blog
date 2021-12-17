@@ -7,8 +7,8 @@
         <img src="{{ app.user.getAvatar }}" alt="{{ app.user.lastName }}" class="rounded-circle">
         <p class="h2 mt-3">{{ app.user.LastName }}</p>
         <p class="text-muted">Created at {{ app.user.createdAt|date("d/m/Y") }}</p>
-        <button class="btn btn-outline-primary"><a href="#" class="text-decoration-none text-dark">Edit</a></button>
-        <button class="btn btn-outline-primary"><a href="#" class="text-decoration-none text-dark">Delete</a></button>
+        <button class="btn btn-outline-primary"><a href="{{ path('app_account_edit') }}" class="text-decoration-none text-dark">Edit</a></button>
+        <button class="btn btn-outline-primary"><a href="#" class="text-decoration-none text-dark">Change Password</a></button>
     </div>
     
 
