@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Controller;
 
@@ -17,13 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+/**
+ * It is used for registration 
+**/
 class RegistrationController extends AbstractController
+
 {
-    private $emailVerifier;
+    private $_emailVerifier;
 
     public function __construct(EmailVerifier $emailVerifier)
     {
-        $this->emailVerifier = $emailVerifier;
+        $this->_emailVerifier = $emailVerifier;
     }
 
     /**
@@ -31,7 +35,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $em): Response
     {
-        if($this->getUser()){
+        if ($this->getUser()) {
             $this->addFlash('danger', 'You are already logged in');
 
             return $this->redirectToRoute('app_home');
@@ -44,7 +48,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('password')->getData()
                 )
@@ -54,7 +58,8 @@ class RegistrationController extends AbstractController
             $em->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->_emailVerifier->sendEmailConfirmation(
+                'app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address($this->getParameter('app.blogmail'), $this->getParameter('app.name')))
                     ->to($user->getEmail())
@@ -70,9 +75,10 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('registration/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'registration/register.html.twig', 
+            ['form' => $form->createView()]
+        );
     }
 
     /**

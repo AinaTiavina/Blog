@@ -14,20 +14,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+ 
 class PostController extends AbstractController
 {
 
     /**
+     * Route to the home
+     * 
      * @Route("/", name="app_home", methods={"GET"})
      */
     public function index(PostRepository $postRep): Response
     {
-        $posts = $postRep->findBy([],['CreatedAt' => 'DESC']);
+        $posts = $postRep->findBy([], ['CreatedAt' => 'DESC']);
         
         return $this->render('post/index.html.twig', compact('posts'));
     }
 
     /**
+     * Used to create a post
+     * 
      * @Route("/create", name="app_post_create", methods={"GET","POST"})
      */
     public function create(Request $request, EntityManagerInterface $em): Response
@@ -36,7 +41,7 @@ class PostController extends AbstractController
         $postForm = $this->createForm(PostType::class, $post);
         $postForm->handleRequest($request);
 
-        if($postForm->isSubmitted() && $postForm->isValid()){
+        if ($postForm->isSubmitted() && $postForm->isValid()) {
             $post->setUser($this->getUser());
             $em->persist($post);
             $em->flush();
@@ -45,9 +50,10 @@ class PostController extends AbstractController
             return $this->redirectToRoute("app_home");
         }
 
-        return $this->render('post/create.html.twig', [
-            'form' => $postForm->createView(),
-        ]);
+        return $this->render(
+            'post/create.html.twig', 
+            ['form' => $postForm->createView()]
+        );
     }
 
     /**
@@ -59,20 +65,23 @@ class PostController extends AbstractController
         $comsForm = $this->createForm(CommentType::class, $coms);
         $comsForm->handleRequest($request);
 
-        if($comsForm->isSubmitted() && $comsForm->isValid()){
+        if ($comsForm->isSubmitted() && $comsForm->isValid()) {
             $coms->setPost($post);
             $coms->setUser($this->getUser());
             $em->persist($coms);
             $em->flush();
             
-            return $this->redirectToRoute('app_post_show',['id' => $post->getId()]);
+            return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
         }
 
-        return $this->render('post/show.html.twig', [
-            'post' => $post,
-            'form' => $comsForm->createView(),
-            'comments' => $rep->findBy(['post' => $post->getId()])
-        ]);
+        return $this->render(
+            'post/show.html.twig', 
+            [
+                'post' => $post,
+                'form' => $comsForm->createView(),
+                'comments' => $rep->findBy(['post' => $post->getId()])
+            ]
+        );
     }
 
     /**
@@ -84,25 +93,30 @@ class PostController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('success','Post successfully edited');
+            $this->addFlash('success', 'Post successfully edited');
             
             return $this->redirectToRoute('app_home');
         }
-        return $this->render('post/edit.html.twig', [
-            'post' => $post,
-            'form' => $form->createView()
-        ]);
+        return $this->render(
+            'post/edit.html.twig', 
+            [
+                'post' => $post,
+                'form' => $form->createView()
+            ]
+        );
     }
 
     /**
+     * Return a Response object
+     * 
      * @Route("/post/{id<[0-9]+>}", name="app_post_delete", methods={"DELETE"})
      */
-    public function delete(Post $post, Request $request, EntityManagerInterface $em): Response
+    public function delete(Post $post, Request $request, EntityManagerInterface $em)
     {
-        if($this->isCsrfTokenValid('post_deletion'.$post->getId(), $request->request->get('csrf_token'))){
-            $this->addFlash('success','Post successfully deleted');
+        if ($this->isCsrfTokenValid('post_deletion'.$post->getId(), $request->request->get('csrf_token'))) {
+            $this->addFlash('success', 'Post successfully deleted');
             $em->remove($post);
             $em->flush();    
         }
