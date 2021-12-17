@@ -61,7 +61,12 @@ class RegistrationController extends AbstractController
             $this->_emailVerifier->sendEmailConfirmation(
                 'app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address($this->getParameter('app.blogmail'), $this->getParameter('app.name')))
+                    ->from(
+                        new Address(
+                            $this->getParameter('app.blogmail'), 
+                            $this->getParameter('app.name')
+                        )
+                    )
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
@@ -98,7 +103,7 @@ class RegistrationController extends AbstractController
         // validate email confirmation link, sets User::isVerified=true and persists
         
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $this->_emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
