@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordFormType;
 use App\Form\EditAccountType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,5 +48,18 @@ class AccountController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("/account/changePassword", name="app_password_change", methods={"GET","POST"});
+     */
+    public function changePass(): Response
+    {
+        $form = $this->createForm(ChangePasswordFormType::class, null, ["current_passwrod_is_required" => true]);
+        
+        return $this->render('account/changePassword.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
 
 }
