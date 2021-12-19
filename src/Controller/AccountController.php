@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -52,9 +53,29 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/changePassword", name="app_password_change", methods={"GET","POST"});
      */
-    public function changePass(): Response
+    public function changePass(HttpFoundationRequest $request, UserPasswordHasherInterface $hash, 
+    EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(ChangePasswordFormType::class, null, ["current_passwrod_is_required" => true]);
+        $form = $this->createForm(ChangePasswordFormType::class, null, ["current_password_is_required" => true]);
+        $form->handleRequest($request);
+
+        $user = $this->getUser();
+
+        if ($form->isSubmitted() && $form->isValid() ) {
+            #encode the password before migrating it to the database
+            $user->setPassword(
+                $hash->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            
+            $em->flush();
+
+            $this->addFlash('success', 'Your password is changed with success!');
+
+            return $this->redirectToRoute('app_account');
+        }
         
         return $this->render('account/changePassword.html.twig', [
             'form' => $form->createView()

@@ -20,10 +20,12 @@ class ChangePasswordFormType extends AbstractType
             $builder
             ->add('Password', PasswordType::class, [
                 'label' => 'Current Password',
-                'autocomplete' => false,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'This field cannot be null'
+                        'message' => 'Insert your password please'
                     ]),
                     new UserPassword([
                         'message' => 'Insert your valid password'
@@ -64,7 +66,8 @@ class ChangePasswordFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'current_password_is_required' => false
+            'current_password_is_required' => false,
+            'required' => false
         ]);
 
         $resolver->setAllowedTypes("current_password_is_required", 'bool');

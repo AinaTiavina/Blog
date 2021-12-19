@@ -207,12 +207,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAvatar(int $size=200): string
+    public function getAvatar(?int $size=200): string
     {
-        $grav = "https://www.gravatar.com/avatar/" . md5(strtolower( trim($this->email))) . 
-        "?s=".$size;
-
-        return $grav;
+        return sprintf('https://www.gravatar.com/avatar/%s?s=%d', md5(
+            strtolower(trim($this->getEmail()))), $size);
     }
 
     /**
