@@ -25,7 +25,7 @@ security:
                 path: app_logout
                 csrf_token_generator: Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
                 # where to redirect after logout
-                target: app_login
+                # target: app_login
             login_throttling:
                 max_attempts: 3
                 interval: '5 minutes'
