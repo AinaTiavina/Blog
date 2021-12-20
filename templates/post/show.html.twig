@@ -24,8 +24,8 @@
 		<div class="col-md-4">
             <p>{{ post.description }}</p>			
 		</div>
-
-        <div class="btn-group mt-5 mb-3 w-50">
+        {% if is_granted('OWNER',post) %}
+            <div class="btn-group mt-5 mb-3 w-50">
             <button class="btn btn-outline-primary"><a class="text-decoration-none text-dark"
             href="{{ path('app_post_edit', {id:post.id}) }}">edit</a></button>
             <button class="btn btn-outline-danger">
@@ -33,6 +33,7 @@
                 document.getElementById('js-pin-delete-form').submit();" class="text-decoration-none text-dark">Delete</a>
             </button>
         </div>
+        {% endif %}
     </div>
 
 <!---------------------------comments-------------------------------->
