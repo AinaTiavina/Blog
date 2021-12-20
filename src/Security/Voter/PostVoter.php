@@ -12,7 +12,7 @@ class PostVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return $attribute == 'OWNER'
+        return in_array($attribute, ['OWNER','POST_CREATE']) 
             && $subject instanceof \App\Entity\Post;
     }
 
@@ -26,6 +26,8 @@ class PostVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
+            case 'POST_CREATE':
+                return $user && $user->isVerified();
             case 'OWNER':
                 return $user && $user == $subject->getUser();
         }

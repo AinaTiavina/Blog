@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\EditAccountType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ class AccountController extends AbstractController
 {
     /**
      * @Route("/account", name="app_account", methods="GET")
+     * @IsGranted("ROLE_USER")
      */
     public function index(): Response
     {
@@ -27,6 +29,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/account/edit", name="app_account_edit", methods={"GET","POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function edit(HttpFoundationRequest $request, EntityManagerInterface $em): Response
     {
@@ -52,6 +55,10 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/account/changePassword", name="app_password_change", methods={"GET","POST"});
+     * 
+     * The user should authenticate again if he checked the remember me before changing password
+     * or edit account information
+     * @IsGranted("IS_AUTHENTICATED_FULLY") 
      */
     public function changePass(HttpFoundationRequest $request, UserPasswordHasherInterface $hash, 
     EntityManagerInterface $em): Response

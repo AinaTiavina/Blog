@@ -9,12 +9,12 @@ use App\Form\PostType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
- 
 class PostController extends AbstractController
 {
 
@@ -34,6 +34,7 @@ class PostController extends AbstractController
      * Used to create a post
      * 
      * @Route("/create", name="app_post_create", methods={"GET","POST"})
+     * @IsGranted("POST_CREATE", null, message="You should verify your email")
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -86,6 +87,7 @@ class PostController extends AbstractController
 
     /**
      * @Route("/post/{id<[0-9]+>}/edit", name="app_post_edit", methods={"GET","PUT"})
+     * @IsGranted("OWNER","post")
      */
     public function edit(Post $post, EntityManagerInterface $em, Request $request): Response
     {
@@ -112,6 +114,7 @@ class PostController extends AbstractController
      * Return a Response object
      * 
      * @Route("/post/{id<[0-9]+>}", name="app_post_delete", methods={"DELETE"})
+     * @IsGranted("OWNER","post")
      */
     public function delete(Post $post, Request $request, EntityManagerInterface $em)
     {
