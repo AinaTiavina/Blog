@@ -23,6 +23,3 @@
 /public/media/cache/
 ###< liip/imagine-bundle ###
 
-###>app_custom ###
-/public/uploads/
-###<end ###
