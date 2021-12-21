@@ -12,7 +12,8 @@
                 {% for post in posts %}
                 <article class="col-4 mt-3 mb-5">
                     <div class="card" style="width:400px">
-                        <a href="{{ path('app_post_show', {id:post.id}) }}"><img class="card-img-top" src="{{ (post.imageName ? vich_uploader_asset(post) : asset('Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg'))
+                        <a href="{{ path('app_post_show', {id:post.id}) }}"><img class="card-img-top" 
+                        src="{{ (post.imageName ? vich_uploader_asset(post) : asset('Images/26d3b5aaaaeb97b7149b805fd23c0e62.jpg'))
                         | imagine_filter('squared_thumbnail_medium') }}" alt="{{ post.title }}"
                                 style="width:100%"></a>
                         <div class="card-body">
