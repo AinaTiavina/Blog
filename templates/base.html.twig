@@ -14,15 +14,15 @@
             <link rel="stylesheet" href="CSS/style.css">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
             <link rel="stylesheet" href="fonts/icomoon/style.css">
-
             <link rel="stylesheet" href="CSS/owl.carousel.min.css">
 
         {% endblock %}
 
     </head>
     <body>
+        {% include "partials/_navbar.html.twig" %}
+
         {% block javascripts %}
             <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" 
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
@@ -38,8 +38,6 @@
             crossorigin="anonymous"></script>
             <script src="js/main.js"></script>
         {% endblock %}
-
-        {% include "partials/_navbar.html.twig" %}
 
         {% for type, messages in app.flashes %}
             {% for message in messages %}

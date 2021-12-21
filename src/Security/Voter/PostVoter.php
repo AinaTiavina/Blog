@@ -10,10 +10,8 @@ class PostVoter extends Voter
 {
     protected function supports(string $attribute, $subject): bool
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['OWNER','POST_CREATE']) 
-            && $subject instanceof \App\Entity\Post;
+        return $attribute == 'POST_CREATE' || ($attribute == 'OWNER' 
+            && $subject instanceof \App\Entity\Post);
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -27,9 +25,11 @@ class PostVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'POST_CREATE':
-                return $user && $user->isVerified();
+                #The current should have a verified email before posting
+                return $user->isVerified();
             case 'OWNER':
-                return $user && $user == $subject->getUser();
+                #Only the owner can edit or delete the post
+                return $user->isVerified() && $user == $subject->getUser();
         }
 
         return false;

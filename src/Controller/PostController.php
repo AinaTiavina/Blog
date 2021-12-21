@@ -34,7 +34,7 @@ class PostController extends AbstractController
      * Used to create a post
      * 
      * @Route("/create", name="app_post_create", methods={"GET","POST"})
-     * @IsGranted("POST_CREATE", null, message="You should verify your email")
+     * @IsGranted("POST_CREATE")
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
