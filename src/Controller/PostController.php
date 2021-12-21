@@ -87,7 +87,7 @@ class PostController extends AbstractController
 
     /**
      * @Route("/post/{id<[0-9]+>}/edit", name="app_post_edit", methods={"GET","PUT"})
-     * @IsGranted("OWNER","post")
+     * @IsGranted("OWNER", subject="post")
      */
     public function edit(Post $post, EntityManagerInterface $em, Request $request): Response
     {
@@ -114,7 +114,7 @@ class PostController extends AbstractController
      * Return a Response object
      * 
      * @Route("/post/{id<[0-9]+>}", name="app_post_delete", methods={"DELETE"})
-     * @IsGranted("OWNER","post")
+     * @IsGranted("OWNER", subject="post")
      */
     public function delete(Post $post, Request $request, EntityManagerInterface $em)
     {

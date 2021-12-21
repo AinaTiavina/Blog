@@ -10,7 +10,7 @@ class PostVoter extends Voter
 {
     protected function supports(string $attribute, $subject): bool
     {
-        return $attribute == 'POST_CREATE' || ($attribute == 'OWNER' 
+        return $attribute == 'POST_CREATE' || (in_array($attribute, ['OWNER']) 
             && $subject instanceof \App\Entity\Post);
     }
 
